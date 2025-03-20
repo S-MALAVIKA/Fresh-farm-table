@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farm Fresh Products | Farm Direct Market</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+primary: '#2B7A0B',
+secondary: '#FFA33C'
+},
+borderRadius: {
+'none': '0px',
+'sm': '4px',
+DEFAULT: '8px',
+'md': '12px',
+'lg': '16px',
+'xl': '20px',
+'2xl': '24px',
+'3xl': '32px',
+'full': '9999px',
+'button': '8px'
+}
+}
+}
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+.product-card:hover .quick-view {
+opacity: 1;
+transform: translateY(0);
+}
+.quick-view {
+opacity: 0;
+transform: translateY(10px);
+transition: all 0.3s ease;
+}
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+<header class="bg-white shadow-sm fixed w-full z-50">
+<div class="max-w-7xl mx-auto">
+<div class="flex items-center justify-between h-16 px-4">
+<div class="flex items-center">
+<a href="https://readdy.ai/home/faa43f7b-1aa5-4feb-8d10-860489760f0d/8899f357-9e36-4821-bf55-0af12fde172d" data-readdy="true" class="text-2xl font-['Pacifico'] text-primary">logo</a>
+</div>
+<div class="flex-1 max-w-2xl mx-8">
+<div class="relative">
+<input type="text" id="searchInput" placeholder="Search for fresh products..." class="w-full pl-10 pr-4 py-2 border rounded-full text-sm focus:outline-none focus:border-primary">
+<div class="absolute left-3 top-0 h-full w-5 flex items-center justify-center">
+<i class="ri-search-line text-gray-400"></i>
+</div>
+</div>
+</div>
+<div class="flex items-center space-x-6">
+<button id="languageBtn" class="flex items-center space-x-1 text-gray-700 hover:text-primary">
+<i class="ri-global-line"></i>
+<span class="text-sm">EN</span>
+</button>
+<button id="cartBtn" class="relative text-gray-700 hover:text-primary">
+<i class="ri-shopping-cart-line text-xl"></i>
+<span class="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">3</span>
+</button>
+<button id="userBtn" class="flex items-center space-x-2 text-gray-700 hover:text-primary">
+<i class="ri-user-line text-xl"></i>
+<span class="text-sm">Account</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+
+<main class="pt-24">
+<div class="max-w-7xl mx-auto px-4">
+<div class="flex items-center space-x-4 mb-8">
+<div class="relative">
+<button id="categoryFilter" class="!rounded-button bg-white border border-gray-200 px-4 py-2 text-sm flex items-center space-x-2">
+<span>All Categories</span>
+<i class="ri-arrow-down-s-line"></i>
+</button>
+<div id="categoryDropdown" class="hidden absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-100 z-20">
+<div class="p-2 space-y-1">
+<button class="w-full text-left px-3 py-2 text-sm rounded hover:bg-gray-50 text-gray-700">All Categories</button>
+<button class="w-full text-left px-3 py-2 text-sm rounded hover:bg-gray-50 text-gray-700">Vegetables</button>
+<button class="w-full text-left px-3 py-2 text-sm rounded hover:bg-gray-50 text-gray-700">Fruits</button>
+<button class="w-full text-left px-3 py-2 text-sm rounded hover:bg-gray-50 text-gray-700">Dairy</button>
+<button class="w-full text-left px-3 py-2 text-sm rounded hover:bg-gray-50 text-gray-700">Herbs</button>
+</div>
+</div>
+</div>
+
+<div class="relative">
+<button id="sortFilter" class="!rounded-button bg-white border border-gray-200 px-4 py-2 text-sm flex items-center space-x-2">
+<span>Sort By</span>
+<i class="ri-arrow-down-s-line"></i>
+</button>
+<div id="sortDropdown" class="hidden absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-100 z-20">
+<div class="p-2 space-y-1">
+<button class="w-full text-left px-3 py-2 text-sm rounded hover:bg-gray-50 text-gray-700">Price: Low to High</button>
+<button class="w-full text-left px-3 py-2 text-sm rounded hover:bg-gray-50 text-gray-700">Price: High to Low</button>
+<button class="w-full text-left px-3 py-2 text-sm rounded hover:bg-gray-50 text-gray-700">Most Popular</button>
+<button class="w-full text-left px-3 py-2 text-sm rounded hover:bg-gray-50 text-gray-700">Latest</button>
+</div>
+</div>
+</div>
+
+<div class="flex-1"></div>
+<div class="flex items-center space-x-2 text-sm text-gray-500">
+<span>Showing</span>
+<select class="!rounded-button border border-gray-200 px-2 py-1 pr-8">
+<option>12</option>
+<option>24</option>
+<option>48</option>
+</select>
+<span>per page</span>
+</div>
+</div>
+
+<div class="grid grid-cols-4 gap-6">
+<div class="product-card bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+<div class="relative h-48">
+<img src="https://public.readdy.ai/ai/img_res/9981593a7904ada26dfea64eb951cad2.jpg" class="w-full h-full object-cover" alt="Organic Tomatoes">
+<button class="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm hover:text-primary">
+<i class="ri-heart-line"></i>
+</button>
+<div class="quick-view absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white py-2 text-center text-sm cursor-pointer">
+Quick View
+</div>
+</div>
+<div class="p-4">
+<div class="flex items-center text-sm text-gray-500 mb-1">
+<i class="ri-map-pin-line mr-1"></i>
+<span>Green Valley Farm</span>
+<div class="ml-auto flex items-center">
+<i class="ri-star-fill text-yellow-400"></i>
+<span class="ml-1">4.8</span>
+</div>
+</div>
+<h3 class="font-medium text-gray-900">Organic Tomatoes</h3>
+<p class="text-sm text-gray-500 mt-1">Freshly harvested</p>
+<div class="flex items-center justify-between mt-2">
+<span class="text-primary font-semibold">$4.99/kg</span>
+<button class="!rounded-button bg-primary text-white px-3 py-1 text-sm hover:bg-opacity-90">Add to Cart</button>
+</div>
+</div>
+</div>
+
+<div class="product-card bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+<div class="relative h-48">
+<img src="https://public.readdy.ai/ai/img_res/a734b9c9812166f8d709a3767c981d15.jpg" class="w-full h-full object-cover" alt="Fresh Apples">
+<button class="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm hover:text-primary">
+<i class="ri-heart-line"></i>
+</button>
+<div class="quick-view absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white py-2 text-center text-sm cursor-pointer">
+Quick View
+</div>
+</div>
+<div class="p-4">
+<div class="flex items-center text-sm text-gray-500 mb-1">
+<i class="ri-map-pin-line mr-1"></i>
+<span>Sunny Orchards</span>
+<div class="ml-auto flex items-center">
+<i class="ri-star-fill text-yellow-400"></i>
+<span class="ml-1">4.9</span>
+</div>
+</div>
+<h3 class="font-medium text-gray-900">Fresh Apples</h3>
+<p class="text-sm text-gray-500 mt-1">Sweet and crispy</p>
+<div class="flex items-center justify-between mt-2">
+<span class="text-primary font-semibold">$3.99/kg</span>
+<button class="!rounded-button bg-primary text-white px-3 py-1 text-sm hover:bg-opacity-90">Add to Cart</button>
+</div>
+</div>
+</div>
+
+<div class="product-card bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+<div class="relative h-48">
+<img src="https://public.readdy.ai/ai/img_res/4bb86881f9aae828e1e5a40d0c2f5fcb.jpg" class="w-full h-full object-cover" alt="Organic Carrots">
+<button class="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm hover:text-primary">
+<i class="ri-heart-line"></i>
+</button>
+<div class="quick-view absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white py-2 text-center text-sm cursor-pointer">
+Quick View
+</div>
+</div>
+<div class="p-4">
+<div class="flex items-center text-sm text-gray-500 mb-1">
+<i class="ri-map-pin-line mr-1"></i>
+<span>Root Vegetables Farm</span>
+<div class="ml-auto flex items-center">
+<i class="ri-star-fill text-yellow-400"></i>
+<span class="ml-1">4.7</span>
+</div>
+</div>
+<h3 class="font-medium text-gray-900">Organic Carrots</h3>
+<p class="text-sm text-gray-500 mt-1">Fresh and crunchy</p>
+<div class="flex items-center justify-between mt-2">
+<span class="text-primary font-semibold">$2.49/kg</span>
+<button class="!rounded-button bg-primary text-white px-3 py-1 text-sm hover:bg-opacity-90">Add to Cart</button>
+</div>
+</div>
+</div>
+
+<div class="product-card bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+<div class="relative h-48">
+<img src="https://public.readdy.ai/ai/img_res/09220641772329cdfd59741e2b20917a.jpg" class="w-full h-full object-cover" alt="Fresh Spinach">
+<button class="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm hover:text-primary">
+<i class="ri-heart-line"></i>
+</button>
+<div class="quick-view absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white py-2 text-center text-sm cursor-pointer">
+Quick View
+</div>
+</div>
+<div class="p-4">
+<div class="flex items-center text-sm text-gray-500 mb-1">
+<i class="ri-map-pin-line mr-1"></i>
+<span>Green Leaf Gardens</span>
+<div class="ml-auto flex items-center">
+<i class="ri-star-fill text-yellow-400"></i>
+<span class="ml-1">4.8</span>
+</div>
+</div>
+<h3 class="font-medium text-gray-900">Fresh Spinach</h3>
+<p class="text-sm text-gray-500 mt-1">Nutrient-rich greens</p>
+<div class="flex items-center justify-between mt-2">
+<span class="text-primary font-semibold">$3.29/bunch</span>
+<button class="!rounded-button bg-primary text-white px-3 py-1 text-sm hover:bg-opacity-90">Add to Cart</button>
+</div>
+</div>
+</div>
+
+</div>
+
+<div class="flex items-center justify-between mt-8">
+<button class="!rounded-button bg-white border border-gray-200 px-4 py-2 text-sm text-gray-500 hover:border-primary hover:text-primary disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+Previous
+</button>
+<div class="flex items-center space-x-2">
+<button class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center">1</button>
+<button class="w-8 h-8 rounded-full text-gray-500 hover:bg-gray-100 flex items-center justify-center">2</button>
+<button class="w-8 h-8 rounded-full text-gray-500 hover:bg-gray-100 flex items-center justify-center">3</button>
+<span class="text-gray-400">...</span>
+<button class="w-8 h-8 rounded-full text-gray-500 hover:bg-gray-100 flex items-center justify-center">12</button>
+</div>
+<button class="!rounded-button bg-white border border-gray-200 px-4 py-2 text-sm text-gray-500 hover:border-primary hover:text-primary">
+Next
+</button>
+</div>
+</div>
+</main>
+
+<div id="quickViewModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] bg-white rounded-lg shadow-xl">
+<div class="p-6">
+<button onclick="closeQuickView()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+<i class="ri-close-line text-2xl"></i>
+</button>
+<div class="grid grid-cols-2 gap-8">
+<div class="relative h-[400px]">
+<img id="quickViewImage" src="" class="w-full h-full object-cover rounded-lg" alt="">
+</div>
+<div>
+<h2 id="quickViewTitle" class="text-2xl font-semibold text-gray-900"></h2>
+<div class="flex items-center mt-2">
+<div class="flex items-center text-yellow-400">
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+</div>
+<span class="ml-2 text-sm text-gray-500">(128 reviews)</span>
+</div>
+<div class="mt-4">
+<span id="quickViewPrice" class="text-2xl font-semibold text-primary"></span>
+</div>
+<div class="mt-6 space-y-4">
+<div>
+<h3 class="font-medium text-gray-900">Product Details</h3>
+<p id="quickViewDescription" class="mt-2 text-gray-600"></p>
+</div>
+<div>
+<h3 class="font-medium text-gray-900">Nutritional Information</h3>
+<div class="mt-2 space-y-2 text-sm text-gray-600">
+<div class="flex justify-between">
+<span>Calories</span>
+<span>52 kcal</span>
+</div>
+<div class="flex justify-between">
+<span>Protein</span>
+<span>1.1g</span>
+</div>
+<div class="flex justify-between">
+<span>Carbohydrates</span>
+<span>11.7g</span>
+</div>
+<div class="flex justify-between">
+<span>Fiber</span>
+<span>1.7g</span>
+</div>
+</div>
+</div>
+<div>
+<h3 class="font-medium text-gray-900">Farm Information</h3>
+<div id="quickViewFarm" class="mt-2 text-sm text-gray-600"></div>
+</div>
+</div>
+<div class="mt-8 flex items-center space-x-4">
+<div class="flex items-center border rounded-full">
+<button class="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-primary">-</button>
+<input type="text" value="1" class="w-12 text-center border-none" readonly>
+<button class="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-primary">+</button>
+</div>
+<button class="flex-1 !rounded-button bg-primary text-white py-3 hover:bg-opacity-90">Add to Cart</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+const categoryBtn = document.getElementById('categoryFilter');
+const categoryDropdown = document.getElementById('categoryDropdown');
+const sortBtn = document.getElementById('sortFilter');
+const sortDropdown = document.getElementById('sortDropdown');
+const quickViewModal = document.getElementById('quickViewModal');
+categoryBtn.addEventListener('click', () => {
+categoryDropdown.classList.toggle('hidden');
+sortDropdown.classList.add('hidden');
+});
+
+sortBtn.addEventListener('click', () => {
+sortDropdown.classList.toggle('hidden');
+categoryDropdown.classList.add('hidden');
+});
+
+document.addEventListener('click', (e) => {
+if (!categoryBtn.contains(e.target) && !categoryDropdown.contains(e.target)) {
+categoryDropdown.classList.add('hidden');
+}
+if (!sortBtn.contains(e.target) && !sortDropdown.contains(e.target)) {
+sortDropdown.classList.add('hidden');
+}
+});
+
+const products = [
+{
+name: 'Organic Tomatoes',
+farm: 'Green Valley Farm',
+price: '$4.99/kg',
+image: 'https://public.readdy.ai/ai/img_res/ed9dd782a4b2a7b1d30a8b07f4e34e8a.jpg',
+description: 'Vine-ripened organic tomatoes, harvested at peak freshness. Perfect for salads, cooking, or eating fresh.'
+},
+{
+name: 'Fresh Apples',
+farm: 'Sunny Orchards',
+price: '$3.99/kg',
+image: 'https://public.readdy.ai/ai/img_res/a3e07ef6c0994e9ccdc58e062fb25aac.jpg',
+description: 'Sweet and crispy apples picked fresh from our orchards. Rich in flavor and perfect for snacking.'
+}
+];
+
+function openQuickView(index) {
+const product = products[index];
+document.getElementById('quickViewImage').src = product.image;
+document.getElementById('quickViewTitle').textContent = product.name;
+document.getElementById('quickViewPrice').textContent = product.price;
+document.getElementById('quickViewDescription').textContent = product.description;
+document.getElementById('quickViewFarm').textContent = `From ${product.farm}`;
+quickViewModal.classList.remove('hidden');
+}
+
+function closeQuickView() {
+quickViewModal.classList.add('hidden');
+}
+
+document.querySelectorAll('.quick-view').forEach((btn, index) => {
+btn.addEventListener('click', () => openQuickView(index));
+});
+
+quickViewModal.addEventListener('click', (e) => {
+if (e.target === quickViewModal) {
+closeQuickView();
+}
+});
+</script>
+
+</body>
+</html>
